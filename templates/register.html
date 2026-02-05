@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}تسجيل عضو جديد{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">📝 تسجيل عضو جديد</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('register') }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name" class="form-label">الاسم الكامل *</label>
+                            {{ form.name(class="form-control", placeholder="أدخل الاسم الكامل") }}
+                            {% if form.name.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.name.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">البريد الإلكتروني *</label>
+                            {{ form.email(class="form-control", placeholder="example@email.com") }}
+                            {% if form.email.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.email.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="password" class="form-label">كلمة المرور *</label>
+                            {{ form.password(class="form-control", placeholder="6 أحرف على الأقل") }}
+                            {% if form.password.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.password.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="confirm_password" class="form-label">تأكيد كلمة المرور *</label>
+                            {{ form.confirm_password(class="form-control", placeholder="أعد إدخال كلمة المرور") }}
+                            {% if form.confirm_password.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.confirm_password.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="phone" class="form-label">رقم الهاتف</label>
+                            {{ form.phone(class="form-control", placeholder="+249 9X XXX XXXX") }}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="address" class="form-label">العنوان</label>
+                            {{ form.address(class="form-control", placeholder="العنوان الكامل") }}
+                        </div>
+                    </div>
+                    
+                    <!-- حقل الرتبة العسكرية الجديد -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="military_rank" class="form-label">الرتبة العسكرية *</label>
+                            {{ form.military_rank(class="form-select") }}
+                            {% if form.military_rank.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.military_rank.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <div class="card border-info">
+                                <div class="card-body p-3">
+                                    <small class="text-muted">
+                                        <strong>ملاحظة:</strong> الرتب العسكرية مرتبة من الأعلى إلى الأدنى
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 mt-4">
+                        {{ form.submit(class="btn btn-primary btn-lg") }}
+                    </div>
+                    
+                    <div class="text-center mt-3">
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">العودة للرئيسية</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5>ملاحظات مهمة:</h5>
+                <ul class="mb-0">
+                    <li>جميع الحقول التي تحمل علامة (*) إلزامية</li>
+                    <li>كلمة المرور يجب أن تكون 6 أحرف على الأقل</li>
+                    <li>يجب أن يكون البريد الإلكتروني فريداً وغير مسجل مسبقاً</li>
+                    <li>سيتم تشفير كلمة المرور لحماية خصوصيتك</li>
+                    <li>الرتبة العسكرية مطلوبة لتسجيل العضو</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

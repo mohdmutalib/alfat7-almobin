@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}إحصائيات الرتب العسكرية{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h3 class="mb-0">📊 إحصائيات الرتب العسكرية</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>الرتبة العسكرية</th>
+                                        <th>عدد الأعضاء</th>
+                                        <th>النسبة</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% set total = namespace(value=0) %}
+                                    {% for stat in ranks_stats %}
+                                        {% set total.value = total.value + stat.count %}
+                                    {% endfor %}
+                                    
+                                    {% for stat in ranks_stats %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                        <td>
+                                            {% if stat.rank %}
+                                                <span class="badge bg-primary">{{ stat.rank }}</span>
+                                            {% else %}
+                                                <span class="badge bg-secondary">غير محدد</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ stat.count }}</td>
+                                        <td>
+                                            <div class="progress" style="height: 20px;">
+                                                {% if total.value > 0 %}
+                                                    {% set percentage = (stat.count / total.value) * 100 %}
+                                                {% else %}
+                                                    {% set percentage = 0 %}
+                                                {% endif %}
+                                                <div class="progress-bar bg-success" role="progressbar" 
+                                                     style="width: {{ percentage }}%;" 
+                                                     aria-valuenow="{{ percentage }}" 
+                                                     aria-valuemin="0" 
+                                                     aria-valuemax="100">
+                                                    {{ "%.1f"|format(percentage) }}%
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card border-primary">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">معلومات سريعة</h5>
+                            </div>
+                            <div class="card-body">
+                                <h6>إجمالي الأعضاء: {{ total.value }}</h6>
+                                <hr>
+                                <h6>أكثر الرتب تكراراً:</h6>
+                                <ul class="list-group list-group-flush">
+                                    {% for stat in ranks_stats[:3] %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        {{ stat.rank if stat.rank else 'غير محدد' }}
+                                        <span class="badge bg-primary rounded-pill">{{ stat.count }}</span>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="card border-success mt-3">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0">ملاحظات</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="small">
+                                    <strong>عدد الرتب المختلفة:</strong> {{ ranks_stats|length }}<br>
+                                    <strong>متوسط الأعضاء لكل رتبة:</strong> {{ "%.1f"|format(total.value / ranks_stats|length) if ranks_stats|length > 0 else 0 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('all_members') }}" class="btn btn-outline-primary">عرض جميع الأعضاء</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-success">تسجيل عضو جديد</a>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">العودة للرئيسية</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}بحث عن عضو{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">🔍 بحث عن عضو</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('search') }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="input-group mb-3">
+                        {{ form.search_term(class="form-control form-control-lg", placeholder="أدخل اسم العضو للبحث...") }}
+                        {{ form.submit(class="btn btn-primary btn-lg") }}
+                    </div>
+                    
+                    {% if form.search_term.errors %}
+                        <div class="text-danger">
+                            {% for error in form.search_term.errors %}
+                                <small>{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </form>
+                
+                {% if results %}
+                <div class="mt-4">
+                    <h4>نتائج البحث:</h4>
+                    <div class="list-group">
+                        {% for member in results %}
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ member.name }}</h5>
+                                <small>
+                                    <span class="badge bg-primary">{{ member.military_rank if member.military_rank else 'غير محدد' }}</span>
+                                    - مسجل منذ {{ member.registration_date.strftime('%Y-%m-%d') }}
+                                </small>
+                            </div>
+                            <p class="mb-1"><strong>البريد:</strong> {{ member.email }}</p>
+                            {% if member.phone %}<p class="mb-1"><strong>الهاتف:</strong> {{ member.phone }}</p>{% endif %}
+                            {% if member.address %}<p class="mb-1"><strong>العنوان:</strong> {{ member.address }}</p>{% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="text-center mt-3">
+            <a href="{{ url_for('all_members') }}" class="btn btn-outline-info">عرض جميع الأعضاء</a>
+            <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">العودة للرئيسية</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

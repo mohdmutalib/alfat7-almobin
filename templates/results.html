@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}نتائج البحث{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="mb-0">
+            {% if search_term %}
+                🔍 نتائج البحث عن: "{{ search_term }}"
+            {% else %}
+                📋 جميع الأعضاء المسجلين
+            {% endif %}
+        </h3>
+    </div>
+    <div class="card-body">
+        {% if results %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>الاسم</th>
+                            <th>الرتبة العسكرية</th>
+                            <th>البريد الإلكتروني</th>
+                            <th>رقم الهاتف</th>
+                            <th>العنوان</th>
+                            <th>تاريخ التسجيل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for member in results %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td><strong>{{ member.name }}</strong></td>
+                            <td>
+                                {% if member.military_rank %}
+                                    <span class="badge bg-primary">{{ member.military_rank }}</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">غير محدد</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ member.email }}</td>
+                            <td>{{ member.phone if member.phone else 'غير محدد' }}</td>
+                            <td>{{ member.address if member.address else 'غير محدد' }}</td>
+                            <td>{{ member.registration_date.strftime('%Y-%m-%d') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="alert alert-info mt-3">
+                <strong>عدد النتائج:</strong> {{ results|length }} عضو
+            </div>
+            
+            <!-- رابط إحصائيات الرتب -->
+            <div class="text-center mt-3">
+                <a href="{{ url_for('ranks_stats') }}" class="btn btn-outline-info">
+                    📊 إحصائيات الرتب العسكرية
+                </a>
+            </div>
+            
+        {% else %}
+            <div class="text-center py-5">
+                <h4 class="text-muted">لا توجد نتائج</h4>
+                <p>{% if search_term %}لم يتم العثور على أعضاء مطابقين لبحثك{% else %}لا يوجد أعضاء مسجلين بعد{% endif %}</p>
+                <a href="{{ url_for('register') }}" class="btn btn-primary">سجل عضو جديد</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="text-center mt-3">
+    <a href="{{ url_for('search') }}" class="btn btn-outline-primary">بحث جديد</a>
+    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">العودة للرئيسية</a>
+</div>
+{% endblock %}

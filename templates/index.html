@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}الرئيسية - نظام إدارة الأعضاء{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">مرحباً بك في لواء الفتح المبين</h3>
+            </div>
+            <div class="card-body">
+                <h1 class="display-4 mb-4">👥 نظام لواء الفتح</h1>
+                <p class="lead mb-4">
+                    نظام متكامل لإدارة قاعدة بيانات الأعضاء مع إمكانية التسجيل والبحث بسهولة
+                </p>
+                
+                <div class="row mt-5">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-primary">
+                            <div class="card-body">
+                                <h5 class="card-title">📝 تسجيل جديد</h5>
+                                <p class="card-text">سجل عضو جديد في النظام ببيانات كاملة وآمنة</p>
+                                <a href="{{ url_for('register') }}" class="btn btn-primary">تسجيل عضو</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-success">
+                            <div class="card-body">
+                                <h5 class="card-title">🔍 بحث عن عضو</h5>
+                                <p class="card-text">ابحث عن أي عضو مسجل باستخدام الاسم</p>
+                                <a href="{{ url_for('search') }}" class="btn btn-success">بدء البحث</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-info">
+                            <div class="card-body">
+                                <h5 class="card-title">📋 جميع الأعضاء</h5>
+                                <p class="card-text">عرض قائمة كاملة بجميع الأعضاء المسجلين</p>
+                                <a href="{{ url_for('all_members') }}" class="btn btn-info">عرض الكل</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100 border-warning">
+                            <div class="card-body">
+                                <h5 class="card-title">📊 إحصائيات الرتب</h5>
+                                <p class="card-text">عرض إحصائيات الأعضاء حسب الرتبة العسكرية</p>
+                                <a href="{{ url_for('ranks_stats') }}" class="btn btn-warning">عرض الإحصائيات</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100 border-secondary">
+                            <div class="card-body">
+                                <h5 class="card-title">📈 إحصائيات عامة</h5>
+                                <p class="card-text">عدد الأعضاء المسجلين في النظام</p>
+                                <h2 class="text-primary">{{ members_count }}</h2>
+                                <p class="mb-0">عضو مسجل</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-5">
+                    <h4>مميزات النظام</h4>
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-md-3">
+                            <div class="feature-box p-3">
+                                <h5>🔒 آمن</h5>
+                                <p class="small">تشفير كلمات المرور</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="feature-box p-3">
+                                <h5>⚡ سريع</h5>
+                                <p class="small">بحث فوري عن الأعضاء</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="feature-box p-3">
+                                <h5>📱 متجاوب</h5>
+                                <p class="small">يعمل على جميع الأجهزة</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="feature-box p-3">
+                                <h5>🎯 دقيق</h5>
+                                <p class="small">بيانات منظمة وكاملة</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

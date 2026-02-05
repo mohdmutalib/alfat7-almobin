@@ -1,0 +1,16 @@
+مشروع_الأعضاء/
+│
+├── app.py
+├── requirements.txt
+├── .gitignore
+│
+├── static/
+│   └── style.css
+│
+└── templates/
+    ├── base.html
+    ├── index.html
+    ├── register.html
+    ├── search.html
+    ├── results.html
+    └── ranks_stats.html
